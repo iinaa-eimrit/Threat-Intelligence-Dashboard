@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify
 from bson.objectid import ObjectId
 from . import db, mongo_db
-from .log_parser import parse_log_content
 from models.models import Log, Alert
 from .detection_engine import run_all_detection_rules
 import os
@@ -28,7 +27,7 @@ if os.environ.get('TESTING'):
                     deleted_count = 1
                 return Result()
         raw_logs = RawLogs()
-    mongo_db = DummyMongo()
+    mongo_db = DummyMongo()  # noqa: F811
 else:
     from .celery_worker import process_log
 # Endpoint: View parsed events

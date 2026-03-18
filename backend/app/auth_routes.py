@@ -2,7 +2,9 @@ from flask import Blueprint, request, jsonify
 from models.user import User, AuditLog
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
-import jwt, datetime, os
+import jwt
+import datetime
+import os
 
 auth_bp = Blueprint('auth', __name__)
 

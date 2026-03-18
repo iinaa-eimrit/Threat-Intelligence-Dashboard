@@ -19,7 +19,10 @@ def process_log(log_id, filename, content):
     # Parse and store structured events in PostgreSQL
     events = parse_log_content(content)
     for event in events:
-        log_entry = Log(ip=event.get('ip'), event=event.get('event'), timestamp=event.get('timestamp'), raw_log_id=log_id)
+        log_entry = Log(
+            ip=event.get('ip'), event=event.get('event'),
+            timestamp=event.get('timestamp'), raw_log_id=log_id
+        )
         db.session.add(log_entry)
     db.session.commit()
     return {'events_parsed': len(events)}

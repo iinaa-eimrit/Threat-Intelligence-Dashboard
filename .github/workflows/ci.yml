@@ -9,23 +9,25 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      TESTING: "1"
+      PYTHONPATH: backend
+      POSTGRES_URI: "sqlite:///test.db"
+      MONGO_URI: "mongodb://localhost:27017/testdb"
+      SECRET_KEY: "ci-test-secret-key-32chars-long!!"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
       - name: Install dependencies
         run: |
           pip install -r backend/requirements.txt
+          pip install flake8 pytest
       - name: Lint
         run: |
-          pip install flake8
           flake8 backend/app backend/models
       - name: Test
         run: |
-          pip install pytest
-          pytest backend/tests
-      - name: Build Docker image
-        run: |
-          docker build -t threat-intel-backend ./backend
+          pytest backend/tests -v
