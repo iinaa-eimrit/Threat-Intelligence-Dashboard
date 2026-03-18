@@ -36,11 +36,18 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(swaggerui_bp, url_prefix='/docs')
 
-    # Serve dashboard frontend
-    dashboard_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'dashboard')
+    # Serve React frontend (built files from frontend/dist)
+    frontend_dist = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'frontend', 'dist')
 
     @app.route('/')
     def serve_dashboard():
-        return send_from_directory(dashboard_dir, 'index.html')
+        return send_from_directory(frontend_dist, 'index.html')
+
+    @app.route('/<path:path>')
+    def serve_static(path):
+        file_path = os.path.join(frontend_dist, path)
+        if os.path.isfile(file_path):
+            return send_from_directory(frontend_dist, path)
+        return send_from_directory(frontend_dist, 'index.html')
 
     return app
