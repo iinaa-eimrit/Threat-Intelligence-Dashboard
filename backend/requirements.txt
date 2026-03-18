@@ -1,6 +1,13 @@
 Flask
 Flask-RESTful
 Flask-SQLAlchemy
+Flask-Limiter
+Flask-Cors
+flask-swagger-ui
 psycopg2-binary
 pymongo
-dotenv
+python-dotenv
+celery
+redis
+PyJWT
+requests
