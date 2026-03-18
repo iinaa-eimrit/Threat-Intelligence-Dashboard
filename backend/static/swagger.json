@@ -1,0 +1,67 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Threat Intelligence Log Analysis & Detection System API",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "paths": {
+    "/upload-log": {
+      "post": {
+        "summary": "Upload log file",
+        "consumes": ["multipart/form-data"],
+        "parameters": [{"name": "file", "in": "formData", "type": "file", "required": true}],
+        "responses": {"200": {"description": "Log uploaded"}}
+      }
+    },
+    "/logs/status": {
+      "get": {
+        "summary": "Get log processing status",
+        "responses": {"200": {"description": "Status"}}
+      }
+    },
+    "/events": {
+      "get": {
+        "summary": "View parsed events",
+        "responses": {"200": {"description": "Events"}}
+      }
+    },
+    "/alerts": {
+      "get": {
+        "summary": "View alerts",
+        "responses": {"200": {"description": "Alerts"}}
+      }
+    },
+    "/detect": {
+      "post": {
+        "summary": "Trigger detection engine",
+        "responses": {"200": {"description": "Detection complete"}}
+      }
+    },
+    "/register": {
+      "post": {
+        "summary": "Register user",
+        "parameters": [{"name": "body", "in": "body", "schema": {"$ref": "#/definitions/User"}}],
+        "responses": {"200": {"description": "User registered"}}
+      }
+    },
+    "/login": {
+      "post": {
+        "summary": "Login user",
+        "parameters": [{"name": "body", "in": "body", "schema": {"$ref": "#/definitions/User"}}],
+        "responses": {"200": {"description": "Token"}}
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "username": {"type": "string"},
+        "email": {"type": "string"},
+        "password": {"type": "string"},
+        "role": {"type": "string"}
+      }
+    }
+  }
+}
